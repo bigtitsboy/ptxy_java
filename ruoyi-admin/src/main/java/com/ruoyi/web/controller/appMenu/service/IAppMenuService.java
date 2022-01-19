@@ -1,118 +1,61 @@
 package com.ruoyi.web.controller.appMenu.service;
 
 import java.util.List;
-import java.util.Set;
-
-import com.ruoyi.common.core.domain.TreeSelect;
-import com.ruoyi.system.domain.vo.RouterVo;
 import com.ruoyi.web.controller.appMenu.domain.AppMenu;
-import com.ruoyi.web.controller.appMenu.domain.AppTreeSelect;
 
 /**
  * 移动端菜单Service接口
  * 
  * @author ruoyi
- * @date 2022-01-18
+ * @date 2022-01-19
  */
 public interface IAppMenuService 
 {
     /**
-     * 根据用户查询系统菜单列表
-     *
-     * @param userId 用户ID
-     * @return 菜单列表
+     * 查询移动端菜单
+     * 
+     * @param menuId 移动端菜单主键
+     * @return 移动端菜单
      */
-    public List<AppMenu> selectMenuList(Long userId);
+    public AppMenu selectAppMenuByMenuId(Long menuId);
 
     /**
-     * 根据用户查询系统菜单列表
-     *
-     * @param menu 菜单信息
-     * @param userId 用户ID
-     * @return 菜单列表
+     * 查询移动端菜单列表
+     * 
+     * @param appMenu 移动端菜单
+     * @return 移动端菜单集合
      */
-    public List<AppMenu> selectMenuList(AppMenu menu, Long userId);
-
+    public List<AppMenu> selectAppMenuList(AppMenu appMenu);
 
     /**
-     * 根据用户ID查询菜单树信息
-     *
-     * @param userId 用户ID
-     * @return 菜单列表
-     */
-    public List<AppMenu> selectMenuTreeByUserId(Long userId);
-
-
-    /**
-     * 构建前端路由所需要的菜单
-     *
-     * @param menus 菜单列表
-     * @return 路由列表
-     */
-    public List<RouterVo> buildMenus(List<AppMenu> menus);
-
-    /**
-     * 构建前端所需要树结构
-     *
-     * @param menus 菜单列表
-     * @return 树结构列表
-     */
-    public List<AppMenu> buildMenuTree(List<AppMenu> menus);
-
-    /**
-     * 构建前端所需要下拉树结构
-     *
-     * @param menus 菜单列表
-     * @return 下拉树结构列表
-     */
-    public List<AppTreeSelect> buildMenuTreeSelect(List<AppMenu> menus);
-
-    /**
-     * 根据菜单ID查询信息
-     *
-     * @param menuId 菜单ID
-     * @return 菜单信息
-     */
-    public AppMenu selectMenuById(Long menuId);
-
-    /**
-     * 是否存在菜单子节点
-     *
-     * @param menuId 菜单ID
-     * @return 结果 true 存在 false 不存在
-     */
-    public boolean hasChildByMenuId(Long menuId);
-
-
-    /**
-     * 新增保存菜单信息
-     *
-     * @param menu 菜单信息
+     * 新增移动端菜单
+     * 
+     * @param appMenu 移动端菜单
      * @return 结果
      */
-    public int insertMenu(AppMenu menu);
+    public int insertAppMenu(AppMenu appMenu);
 
     /**
-     * 修改保存菜单信息
-     *
-     * @param menu 菜单信息
+     * 修改移动端菜单
+     * 
+     * @param appMenu 移动端菜单
      * @return 结果
      */
-    public int updateMenu(AppMenu menu);
+    public int updateAppMenu(AppMenu appMenu);
 
     /**
-     * 删除菜单管理信息
-     *
-     * @param menuId 菜单ID
+     * 批量删除移动端菜单
+     * 
+     * @param menuIds 需要删除的移动端菜单主键集合
      * @return 结果
      */
-    public int deleteMenuById(Long menuId);
+    public int deleteAppMenuByMenuIds(Long[] menuIds);
 
     /**
-     * 校验菜单名称是否唯一
-     *
-     * @param menu 菜单信息
+     * 删除移动端菜单信息
+     * 
+     * @param menuId 移动端菜单主键
      * @return 结果
      */
-    public String checkMenuNameUnique(AppMenu menu);
+    public int deleteAppMenuByMenuId(Long menuId);
 }

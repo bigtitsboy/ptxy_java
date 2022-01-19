@@ -1,98 +1,61 @@
 package com.ruoyi.web.controller.appMenu.mapper;
 
 import java.util.List;
-
 import com.ruoyi.web.controller.appMenu.domain.AppMenu;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 移动端菜单Mapper接口
  * 
  * @author ruoyi
- * @date 2022-01-18
+ * @date 2022-01-19
  */
 public interface AppMenuMapper 
 {
     /**
-     * 查询系统菜单列表
-     *
-     * @param menu 菜单信息
-     * @return 菜单列表
+     * 查询移动端菜单
+     * 
+     * @param menuId 移动端菜单主键
+     * @return 移动端菜单
      */
-    public List<AppMenu> selectMenuList(AppMenu menu);
-
+    public AppMenu selectAppMenuByMenuId(Long menuId);
 
     /**
-     * 根据用户查询系统菜单列表
-     *
-     * @param menu 菜单信息
-     * @return 菜单列表
+     * 查询移动端菜单列表
+     * 
+     * @param appMenu 移动端菜单
+     * @return 移动端菜单集合
      */
-    public List<AppMenu> selectMenuListByUserId(AppMenu menu);
-
+    public List<AppMenu> selectAppMenuList(AppMenu appMenu);
 
     /**
-     * 根据用户ID查询菜单
-     *
-     * @return 菜单列表
-     */
-    public List<AppMenu> selectMenuTreeAll();
-
-    /**
-     * 根据用户ID查询菜单
-     *
-     * @param userId 用户ID
-     * @return 菜单列表
-     */
-    public List<AppMenu> selectMenuTreeByUserId(Long userId);
-
-
-    /**
-     * 根据菜单ID查询信息
-     *
-     * @param menuId 菜单ID
-     * @return 菜单信息
-     */
-    public AppMenu selectMenuById(Long menuId);
-
-    /**
-     * 是否存在菜单子节点
-     *
-     * @param menuId 菜单ID
+     * 新增移动端菜单
+     * 
+     * @param appMenu 移动端菜单
      * @return 结果
      */
-    public int hasChildByMenuId(Long menuId);
+    public int insertAppMenu(AppMenu appMenu);
 
     /**
-     * 新增菜单信息
-     *
-     * @param menu 菜单信息
+     * 修改移动端菜单
+     * 
+     * @param appMenu 移动端菜单
      * @return 结果
      */
-    public int insertMenu(AppMenu menu);
+    public int updateAppMenu(AppMenu appMenu);
 
     /**
-     * 修改菜单信息
-     *
-     * @param menu 菜单信息
+     * 删除移动端菜单
+     * 
+     * @param menuId 移动端菜单主键
      * @return 结果
      */
-    public int updateMenu(AppMenu menu);
+    public int deleteAppMenuByMenuId(Long menuId);
 
     /**
-     * 删除菜单管理信息
-     *
-     * @param menuId 菜单ID
+     * 批量删除移动端菜单
+     * 
+     * @param menuIds 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteMenuById(Long menuId);
-
-    /**
-     * 校验菜单名称是否唯一
-     *
-     * @param menuName 菜单名称
-     * @param parentId 父菜单ID
-     * @return 结果
-     */
-    public AppMenu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") Long parentId);
+    public int deleteAppMenuByMenuIds(Long[] menuIds);
 }

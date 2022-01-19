@@ -1,23 +1,17 @@
 package com.ruoyi.web.controller.appMenu.domain;
 
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import com.ruoyi.common.core.domain.TreeEntity;
 
 /**
  * 移动端菜单对象 app_menu
  * 
  * @author ruoyi
- * @date 2022-01-18
+ * @date 2022-01-19
  */
-public class AppMenu extends BaseEntity
+public class AppMenu extends TreeEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -25,223 +19,166 @@ public class AppMenu extends BaseEntity
     private Long menuId;
 
     /** 菜单名称 */
+    @Excel(name = "菜单名称")
     private String menuName;
 
-    /** 父菜单名称 */
-    private String parentName;
-
-    /** 父菜单ID */
-    private Long parentId;
-
-    /** 显示顺序 */
-    private String orderNum;
-
     /** 路由地址 */
+    @Excel(name = "路由地址")
     private String path;
 
     /** 组件路径 */
+    @Excel(name = "组件路径")
     private String component;
 
     /** 路由参数 */
+    @Excel(name = "路由参数")
     private String query;
 
     /** 是否为外链（0是 1否） */
-    private String isFrame;
+    @Excel(name = "是否为外链", readConverterExp = "0=是,1=否")
+    private Long isFrame;
 
     /** 是否缓存（0缓存 1不缓存） */
-    private String isCache;
+    @Excel(name = "是否缓存", readConverterExp = "0=缓存,1=不缓存")
+    private Long isCache;
 
-    /** 类型（M目录 C菜单 F按钮） */
+    /** 菜单类型（M目录 C菜单 F按钮） */
+    @Excel(name = "菜单类型", readConverterExp = "M=目录,C=菜单,F=按钮")
     private String menuType;
 
-    /** 显示状态（0显示 1隐藏） */
+    /** 菜单状态（0显示 1隐藏） */
+    @Excel(name = "菜单状态", readConverterExp = "0=显示,1=隐藏")
     private String visible;
 
-    /** 菜单状态（0显示 1隐藏） */
+    /** 菜单状态（0正常 1停用） */
+    @Excel(name = "菜单状态", readConverterExp = "0=正常,1=停用")
     private String status;
 
     /** 菜单图标 */
+    @Excel(name = "菜单图标")
     private String icon;
 
-    /** 子菜单 */
-    private List<AppMenu> children = new ArrayList<AppMenu>();
-
-    public Long getMenuId()
-    {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId)
+    public void setMenuId(Long menuId) 
     {
         this.menuId = menuId;
     }
 
-    @NotBlank(message = "菜单名称不能为空")
-    @Size(min = 0, max = 50, message = "菜单名称长度不能超过50个字符")
-    public String getMenuName()
+    public Long getMenuId() 
     {
-        return menuName;
+        return menuId;
     }
-
-    public void setMenuName(String menuName)
+    public void setMenuName(String menuName) 
     {
         this.menuName = menuName;
     }
 
-    public String getParentName()
+    public String getMenuName() 
     {
-        return parentName;
+        return menuName;
     }
-
-    public void setParentName(String parentName)
-    {
-        this.parentName = parentName;
-    }
-
-    public Long getParentId()
-    {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId)
-    {
-        this.parentId = parentId;
-    }
-
-    @NotBlank(message = "显示顺序不能为空")
-    public String getOrderNum()
-    {
-        return orderNum;
-    }
-
-    public void setOrderNum(String orderNum)
-    {
-        this.orderNum = orderNum;
-    }
-
-    @Size(min = 0, max = 200, message = "路由地址不能超过200个字符")
-    public String getPath()
-    {
-        return path;
-    }
-
-    public void setPath(String path)
+    public void setPath(String path) 
     {
         this.path = path;
     }
 
-    @Size(min = 0, max = 200, message = "组件路径不能超过255个字符")
-    public String getComponent()
+    public String getPath() 
     {
-        return component;
+        return path;
     }
-
-    public void setComponent(String component)
+    public void setComponent(String component) 
     {
         this.component = component;
     }
 
-    public String getQuery()
+    public String getComponent() 
     {
-        return query;
+        return component;
     }
-
-    public void setQuery(String query)
+    public void setQuery(String query) 
     {
         this.query = query;
     }
 
-    public String getIsFrame()
+    public String getQuery() 
     {
-        return isFrame;
+        return query;
     }
-
-    public void setIsFrame(String isFrame)
+    public void setIsFrame(Long isFrame) 
     {
         this.isFrame = isFrame;
     }
 
-    public String getIsCache()
+    public Long getIsFrame() 
     {
-        return isCache;
+        return isFrame;
     }
-
-    public void setIsCache(String isCache)
+    public void setIsCache(Long isCache) 
     {
         this.isCache = isCache;
     }
 
-    @NotBlank(message = "菜单类型不能为空")
-    public String getMenuType()
+    public Long getIsCache() 
     {
-        return menuType;
+        return isCache;
     }
-
-    public void setMenuType(String menuType)
+    public void setMenuType(String menuType) 
     {
         this.menuType = menuType;
     }
 
-    public String getVisible()
+    public String getMenuType() 
     {
-        return visible;
+        return menuType;
     }
-
-    public void setVisible(String visible)
+    public void setVisible(String visible) 
     {
         this.visible = visible;
     }
 
-    public String getStatus()
+    public String getVisible() 
     {
-        return status;
+        return visible;
     }
-
-    public void setStatus(String status)
+    public void setStatus(String status) 
     {
         this.status = status;
     }
 
-    public String getIcon()
+    public String getStatus() 
     {
-        return icon;
+        return status;
     }
-
-    public void setIcon(String icon)
+    public void setIcon(String icon) 
     {
         this.icon = icon;
     }
 
-    public List<AppMenu> getChildren()
+    public String getIcon() 
     {
-        return children;
-    }
-
-    public void setChildren(List<AppMenu> children)
-    {
-        this.children = children;
+        return icon;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-                .append("menuId", getMenuId())
-                .append("menuName", getMenuName())
-                .append("parentId", getParentId())
-                .append("orderNum", getOrderNum())
-                .append("path", getPath())
-                .append("component", getComponent())
-                .append("isFrame", getIsFrame())
-                .append("IsCache", getIsCache())
-                .append("menuType", getMenuType())
-                .append("visible", getVisible())
-                .append("status ", getStatus())
-                .append("icon", getIcon())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .toString();
+            .append("menuId", getMenuId())
+            .append("menuName", getMenuName())
+            .append("parentId", getParentId())
+            .append("orderNum", getOrderNum())
+            .append("path", getPath())
+            .append("component", getComponent())
+            .append("query", getQuery())
+            .append("isFrame", getIsFrame())
+            .append("isCache", getIsCache())
+            .append("menuType", getMenuType())
+            .append("visible", getVisible())
+            .append("status", getStatus())
+            .append("icon", getIcon())
+            .append("createBy", getCreateBy())
+            .append("createTime", getCreateTime())
+            .append("updateBy", getUpdateBy())
+            .append("updateTime", getUpdateTime())
+            .append("remark", getRemark())
+            .toString();
     }
 }
