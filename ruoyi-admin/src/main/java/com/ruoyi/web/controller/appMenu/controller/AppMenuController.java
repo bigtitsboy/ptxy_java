@@ -48,6 +48,17 @@ public class AppMenuController extends BaseController
         List<AppMenu> list = appMenuService.selectAppMenuList(appMenu);
         return AjaxResult.success(list);
     }
+    /**
+     * 查询移动端菜单列表
+     */
+    @ApiOperation("查询移动端菜单列表")
+    @PreAuthorize("@ss.hasPermi('controller:appMenu:list')")
+    @PostMapping("/list")
+    public AjaxResult postList(@RequestBody AppMenu appMenu)
+    {
+        List<AppMenu> list = appMenuService.selectAppMenuList(appMenu);
+        return AjaxResult.success(list);
+    }
 
     /**
      * 导出移动端菜单列表
