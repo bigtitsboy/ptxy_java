@@ -8,6 +8,8 @@ import com.ruoyi.web.controller.appMenu.mapper.AppMenuMapper;
 import com.ruoyi.web.controller.appMenu.domain.AppMenu;
 import com.ruoyi.web.controller.appMenu.service.IAppMenuService;
 
+import javax.annotation.Resource;
+
 /**
  * 移动端菜单Service业务层处理
  * 
@@ -17,7 +19,7 @@ import com.ruoyi.web.controller.appMenu.service.IAppMenuService;
 @Service
 public class AppMenuServiceImpl implements IAppMenuService 
 {
-    @Autowired
+    @Resource
     private AppMenuMapper appMenuMapper;
 
     /**

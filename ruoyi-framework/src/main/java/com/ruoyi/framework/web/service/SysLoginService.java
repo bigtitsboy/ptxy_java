@@ -1,11 +1,20 @@
 package com.ruoyi.framework.web.service;
 
 import javax.annotation.Resource;
+
+import com.ruoyi.common.core.domain.entity.Member;
+
+import com.ruoyi.common.exception.BizException;
+import com.ruoyi.common.exception.UtilException;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.user.info.member.domain.MemberInfo;
+import com.ruoyi.user.info.member.service.IMemberInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -23,6 +32,8 @@ import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
+
+import java.util.List;
 
 /**
  * 登录校验方法
@@ -43,6 +54,9 @@ public class SysLoginService
     
     @Autowired
     private ISysUserService userService;
+
+    @Autowired
+    private IMemberInfoService iMemberInfoService;
 
     @Autowired
     private ISysConfigService configService;
@@ -93,8 +107,31 @@ public class SysLoginService
     }
 
     /**
+     * 移动端登录验证
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return 结果
+     */
+    public String apiLogin(String username, String password)
+    {
+        MemberInfo memberInfo = new MemberInfo();
+        memberInfo.setMemberName(username);
+        memberInfo.setPassword(password);
+        MemberInfo memberLogin = getMemberLogin(memberInfo, true, "账号/密码不正确");
+
+        LoginUser loginUser = new LoginUser(new Member(username, password));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        authenticationToken.setDetails(loginUser);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        recordApiLoginInfo(memberLogin.getMemberId());
+        // 生成token
+        return tokenService.createToken(loginUser);
+    }
+
+    /**
      * 校验验证码
-     * 
+     *
      * @param username 用户名
      * @param code 验证码
      * @param uuid 唯一标识
@@ -129,5 +166,37 @@ public class SysLoginService
         sysUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         sysUser.setLoginDate(DateUtils.getNowDate());
         userService.updateUserProfile(sysUser);
+    }
+
+    /**
+     * 记录移动端登录信息
+     *
+     * @param memberId 用户ID
+     */
+    public void recordApiLoginInfo(String memberId)
+    {
+        MemberInfo member = new MemberInfo();
+        member.setMemberId(memberId);
+        member.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        member.setLoginDate(DateUtils.getNowDate());
+        iMemberInfoService.updateMemberInfo(member);
+    }
+
+
+    public MemberInfo getMemberLogin(MemberInfo memberInfo,boolean ifStatus,String nullStr){
+        List<MemberInfo> info = iMemberInfoService.selectMemberInfoList(memberInfo);
+        if (ifStatus){
+            if (info.size() == 0) {
+                throw new BizException(Constants.LOGIN_FAIL, nullStr);
+            }
+            if (StringUtils.equals(info.get(0).getDelFlag(),"2")) {
+
+                throw new BizException(Constants.LOGIN_FAIL, "账户已注销！");
+            }
+            if (StringUtils.equals(info.get(0).getStatus(),"1")) {
+                throw new BizException(Constants.LOGIN_FAIL, "账户已被禁用！");
+            }
+        }
+        return info.get(0);
     }
 }

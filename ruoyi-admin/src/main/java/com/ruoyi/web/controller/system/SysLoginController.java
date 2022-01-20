@@ -2,11 +2,10 @@ package com.ruoyi.web.controller.system;
 
 import java.util.List;
 import java.util.Set;
+
+import com.ruoyi.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysMenu;
@@ -50,6 +49,22 @@ public class SysLoginController
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
+
+    /**
+     * 移动端登录
+     *
+     * @return
+     */
+    @PostMapping("/api/pwd/login")
+    public AjaxResult apiPwdLogin(@RequestBody LoginBody loginBody)
+    {
+        AjaxResult ajax = AjaxResult.success();
+        // 生成令牌
+        String token = loginService.apiLogin(loginBody.getUsername(), loginBody.getPassword());
+        ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
+
 
     /**
      * 获取用户信息

@@ -37,7 +37,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 查询二手商品列表
      */
-    @PreAuthorize("@ss.hasPermi('goods:secondhandGoods:list')")
+    //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:list')")
     @GetMapping("/list")
     public TableDataInfo list(SecondhandGoods secondhandGoods)
     {
@@ -49,7 +49,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 导出二手商品列表
      */
-    @PreAuthorize("@ss.hasPermi('goods:secondhandGoods:export')")
+    //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:export')")
     @Log(title = "二手商品", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SecondhandGoods secondhandGoods)
@@ -62,7 +62,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 获取二手商品详细信息
      */
-    @PreAuthorize("@ss.hasPermi('goods:secondhandGoods:query')")
+    //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:query')")
     @GetMapping(value = "/{goodsId}")
     public AjaxResult getInfo(@PathVariable("goodsId") Long goodsId)
     {
@@ -72,7 +72,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 新增二手商品
      */
-    @PreAuthorize("@ss.hasPermi('goods:secondhandGoods:add')")
+    //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:add')")
     @Log(title = "二手商品", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SecondhandGoods secondhandGoods)
@@ -83,7 +83,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 修改二手商品
      */
-    @PreAuthorize("@ss.hasPermi('goods:secondhandGoods:edit')")
+    //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:edit')")
     @Log(title = "二手商品", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SecondhandGoods secondhandGoods)
@@ -94,7 +94,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 删除二手商品
      */
-    @PreAuthorize("@ss.hasPermi('goods:secondhandGoods:remove')")
+    //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:remove')")
     @Log(title = "二手商品", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{goodsIds}")
     public AjaxResult remove(@PathVariable Long[] goodsIds)
