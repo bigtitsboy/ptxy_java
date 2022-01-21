@@ -52,7 +52,7 @@ public class AppMenuController extends BaseController
      * 查询移动端菜单列表
      */
     @ApiOperation("查询移动端菜单列表")
-    @PreAuthorize("@ss.hasPermi('controller:appMenu:list')")
+    //@PreAuthorize("@ss.hasPermi('controller:appMenu:list')")
     @PostMapping("/list")
     public AjaxResult postList(@RequestBody AppMenu appMenu)
     {
