@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.ruoyi.common.utils.StringUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.constant.Constants;
@@ -21,6 +23,7 @@ import com.ruoyi.system.service.ISysMenuService;
  * 
  * @author ruoyi
  */
+@Api("登录验证")
 @RestController
 public class SysLoginController
 {
@@ -39,6 +42,7 @@ public class SysLoginController
      * @param loginBody 登录信息
      * @return 结果
      */
+    @ApiOperation("pc端登录")
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginBody loginBody)
     {
@@ -51,10 +55,11 @@ public class SysLoginController
     }
 
     /**
-     * 移动端登录
+     * 移动端密码登录
      *
      * @return
      */
+    @ApiOperation("移动端密码登录")
     @PostMapping("/api/pwd/login")
     public AjaxResult apiPwdLogin(@RequestBody LoginBody loginBody)
     {
