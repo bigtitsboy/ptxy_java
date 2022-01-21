@@ -130,6 +130,52 @@ public class SysLoginService
     }
 
     /**
+     * 移动端手机+密码登录验证
+     *
+     * @param username 手机号
+     * @param password 密码
+     * @return 结果
+     */
+    public String apiPhoneLogin(String username, String password)
+    {
+        MemberInfo memberInfo = new MemberInfo();
+        memberInfo.setPhonenumber(username);
+        memberInfo.setPassword(password);
+        MemberInfo memberLogin = getMemberLogin(memberInfo, true, "手机号码/密码不正确");
+
+        LoginUser loginUser = new LoginUser(new Member(memberLogin.getMemberName(), password));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberLogin.getMemberName(), password);
+        authenticationToken.setDetails(loginUser);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        recordApiLoginInfo(memberLogin.getMemberId());
+        // 生成token
+        return tokenService.createToken(loginUser);
+    }
+
+    /**
+     * 移动端邮箱+密码登录验证
+     *
+     * @param username 手机号
+     * @param password 密码
+     * @return 结果
+     */
+    public String apiEmailLogin(String username, String password)
+    {
+        MemberInfo memberInfo = new MemberInfo();
+        memberInfo.setEmail(username);
+        memberInfo.setPassword(password);
+        MemberInfo memberLogin = getMemberLogin(memberInfo, true, "邮箱/密码不正确");
+
+        LoginUser loginUser = new LoginUser(new Member(memberLogin.getMemberName(), password));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberLogin.getMemberName(), password);
+        authenticationToken.setDetails(loginUser);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        recordApiLoginInfo(memberLogin.getMemberId());
+        // 生成token
+        return tokenService.createToken(loginUser);
+    }
+
+    /**
      * 校验验证码
      *
      * @param username 用户名

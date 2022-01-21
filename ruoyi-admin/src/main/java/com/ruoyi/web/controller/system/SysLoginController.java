@@ -55,11 +55,11 @@ public class SysLoginController
     }
 
     /**
-     * 移动端密码登录
+     * 移动端账号+密码登录
      *
      * @return
      */
-    @ApiOperation("移动端密码登录")
+    @ApiOperation("移动端账号+密码登录")
     @PostMapping("/api/pwd/login")
     public AjaxResult apiPwdLogin(@RequestBody LoginBody loginBody)
     {
@@ -69,8 +69,37 @@ public class SysLoginController
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
+    /**
+     * 移动端手机+密码登录
+     *
+     * @return
+     */
+    @ApiOperation("移动端手机+密码登录")
+    @PostMapping("/api/phone/login")
+    public AjaxResult apiPhoneLogin(@RequestBody LoginBody loginBody)
+    {
+        AjaxResult ajax = AjaxResult.success();
+        // 生成令牌
+        String token = loginService.apiPhoneLogin(loginBody.getUsername(), loginBody.getPassword());
+        ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
 
-
+    /**
+     * 移动端邮箱+密码登录
+     *
+     * @return
+     */
+    @ApiOperation("移动端邮箱+密码登录")
+    @PostMapping("/api/email/login")
+    public AjaxResult apiEmailLogin(@RequestBody LoginBody loginBody)
+    {
+        AjaxResult ajax = AjaxResult.success();
+        // 生成令牌
+        String token = loginService.apiEmailLogin(loginBody.getUsername(), loginBody.getPassword());
+        ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
     /**
      * 获取用户信息
      * 
