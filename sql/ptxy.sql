@@ -28,7 +28,7 @@ create table secondhand_goods (
   category_id       bigint(20)      not null                   comment '分类ID',
   user_id           bigint(20)      not null                   comment '用户ID',
   phonenumber       varchar(11)     default ''                 comment '手机号码',
-  goods_path        varchar(255)    default ''                 comment '商品路径',
+  image_path_id     varchar(32)     default ''                 comment '图片路径id',
   goods_count       bigint(20)      default 0                  comment '商品浏览量',
   status            char(1)         not null                   comment '商品状态（0正常 1停用）',
   del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
@@ -160,3 +160,36 @@ create table member_info (
   remark            varchar(500)    default null               comment '备注',
   primary key (member_id)
 ) engine=innodb  comment = '会员信息表';
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('会员信息', '2000', '1', 'member', 'controller/member/index', 1, 0, 'C', '0', '0', 'controller:member:list', '#', 'admin', sysdate(), '', null, '会员信息菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('会员信息查询', @parentId, '1',  '#', '', 1, 0, 'F', '0', '0', 'controller:member:query',        '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('会员信息新增', @parentId, '2',  '#', '', 1, 0, 'F', '0', '0', 'controller:member:add',          '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('会员信息修改', @parentId, '3',  '#', '', 1, 0, 'F', '0', '0', 'controller:member:edit',         '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('会员信息删除', @parentId, '4',  '#', '', 1, 0, 'F', '0', '0', 'controller:member:remove',       '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('会员信息导出', @parentId, '5',  '#', '', 1, 0, 'F', '0', '0', 'controller:member:export',       '#', 'admin', sysdate(), '', null, '');
+
+
+-- ----------------------------
+-- 5、图片路径表
+-- ----------------------------
+drop table if exists image_url;
+create table image_url (
+  image_path_id     varchar(32)                                comment '图片路径id',
+  image_path        varchar(255)    default ''                 comment '图片路径'
+) engine=innodb  comment = '图片路径表';

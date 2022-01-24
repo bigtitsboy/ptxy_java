@@ -46,9 +46,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商品路径" prop="goodsPath">
+      <el-form-item label="商品路径" prop="imagePathId">
         <el-input
-          v-model="queryParams.goodsPath"
+          v-model="queryParams.imagePathId"
           placeholder="请输入商品路径"
           clearable
           size="small"
@@ -125,7 +125,7 @@
       <el-table-column label="分类ID" align="center" prop="categoryId" />
       <el-table-column label="用户ID" align="center" prop="userId" />
       <el-table-column label="手机号码" align="center" prop="phonenumber" />
-      <el-table-column label="商品路径" align="center" prop="goodsPath" />
+      <el-table-column label="商品路径" align="center" prop="imagePathId" />
       <el-table-column label="商品浏览量" align="center" prop="goodsCount" />
       <el-table-column label="商品状态" align="center" prop="status" />
       <el-table-column label="备注" align="center" prop="remark" />
@@ -178,8 +178,8 @@
         <el-form-item label="手机号码" prop="phonenumber">
           <el-input v-model="form.phonenumber" placeholder="请输入手机号码" />
         </el-form-item>
-        <el-form-item label="商品路径" prop="goodsPath">
-          <el-input v-model="form.goodsPath" placeholder="请输入商品路径" />
+        <el-form-item label="商品路径" prop="imagePathId">
+          <el-input v-model="form.imagePathId" placeholder="请输入商品路径" />
         </el-form-item>
         <el-form-item label="商品浏览量" prop="goodsCount">
           <el-input v-model="form.goodsCount" placeholder="请输入商品浏览量" />
@@ -234,7 +234,7 @@ export default {
         categoryId: null,
         userId: null,
         phonenumber: null,
-        goodsPath: null,
+        imagePathId: null,
         goodsCount: null,
         status: null,
       },
@@ -291,7 +291,7 @@ export default {
         categoryId: null,
         userId: null,
         phonenumber: null,
-        goodsPath: null,
+        imagePathId: null,
         goodsCount: null,
         status: "0",
         delFlag: null,

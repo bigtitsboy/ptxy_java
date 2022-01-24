@@ -42,7 +42,7 @@ public class GoodsCategoryController extends BaseController
      * 查询商品分类列表
      */
     @ApiOperation("查询商品分类列表")
-    @PreAuthorize("@ss.hasPermi('goods:goodsCategory:list')")
+//    @PreAuthorize("@ss.hasPermi('goods:goodsCategory:list')")
     @GetMapping("/list")
     public TableDataInfo list(GoodsCategory goodsCategory)
     {

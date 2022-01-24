@@ -1,6 +1,8 @@
 package com.ruoyi.operating.goods.secondhandGoods.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -43,9 +45,13 @@ public class SecondhandGoods extends BaseEntity
     @Excel(name = "手机号码")
     private String phonenumber;
 
-    /** 商品路径 */
-    @Excel(name = "商品路径")
-    private String goodsPath;
+    /** 图片路径ID */
+    @Excel(name = "图片路径ID")
+    private String imagePathId;
+
+    /** 图片路径List */
+    @Excel(name = "图片路径List")
+    private List<String> imageList;
 
     /** 商品浏览量 */
     @Excel(name = "商品浏览量")
@@ -121,21 +127,29 @@ public class SecondhandGoods extends BaseEntity
     {
         return phonenumber;
     }
-    public void setGoodsPath(String goodsPath) 
-    {
-        this.goodsPath = goodsPath;
+
+    public String getImagePathId() {
+        return imagePathId;
     }
 
-    public String getGoodsPath() 
-    {
-        return goodsPath;
+    public void setImagePathId(String imagePathId) {
+        this.imagePathId = imagePathId;
     }
-    public void setGoodsCount(Long goodsCount) 
+
+    public List<String> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<String> imageList) {
+        this.imageList = imageList;
+    }
+
+    public void setGoodsCount(Long goodsCount)
     {
         this.goodsCount = goodsCount;
     }
 
-    public Long getGoodsCount() 
+    public Long getGoodsCount()
     {
         return goodsCount;
     }
@@ -168,7 +182,8 @@ public class SecondhandGoods extends BaseEntity
             .append("categoryId", getCategoryId())
             .append("userId", getUserId())
             .append("phonenumber", getPhonenumber())
-            .append("goodsPath", getGoodsPath())
+            .append("imagePathId", getImagePathId())
+            .append("imageList", getImageList())
             .append("goodsCount", getGoodsCount())
             .append("status", getStatus())
             .append("delFlag", getDelFlag())

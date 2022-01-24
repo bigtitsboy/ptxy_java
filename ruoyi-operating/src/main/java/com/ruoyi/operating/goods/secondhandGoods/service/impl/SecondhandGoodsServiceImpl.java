@@ -1,12 +1,22 @@
 package com.ruoyi.operating.goods.secondhandGoods.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.uuid.UUID;
+import com.ruoyi.system.image.domain.ImageUrl;
+import com.ruoyi.system.image.service.IImageUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.operating.goods.secondhandGoods.mapper.SecondhandGoodsMapper;
 import com.ruoyi.operating.goods.secondhandGoods.domain.SecondhandGoods;
 import com.ruoyi.operating.goods.secondhandGoods.service.ISecondhandGoodsService;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * 二手商品Service业务层处理
@@ -17,8 +27,11 @@ import com.ruoyi.operating.goods.secondhandGoods.service.ISecondhandGoodsService
 @Service
 public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService 
 {
-    @Autowired
+    @Resource
     private SecondhandGoodsMapper secondhandGoodsMapper;
+
+    @Autowired
+    private IImageUrlService iImageUrlService;
 
     /**
      * 查询二手商品
@@ -29,7 +42,12 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
     @Override
     public SecondhandGoods selectSecondhandGoodsByGoodsId(Long goodsId)
     {
-        return secondhandGoodsMapper.selectSecondhandGoodsByGoodsId(goodsId);
+        //查询图片list
+        SecondhandGoods goods = secondhandGoodsMapper.selectSecondhandGoodsByGoodsId(goodsId);
+        if (StringUtils.isNotEmpty(goods.getImagePathId())){
+            goods.setImageList(iImageUrlService.selectImageUrlByImagePathId(goods.getImagePathId()));
+        }
+        return  goods;
     }
 
     /**
@@ -41,7 +59,14 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
     @Override
     public List<SecondhandGoods> selectSecondhandGoodsList(SecondhandGoods secondhandGoods)
     {
-        return secondhandGoodsMapper.selectSecondhandGoodsList(secondhandGoods);
+        List<SecondhandGoods> goodsList = secondhandGoodsMapper.selectSecondhandGoodsList(secondhandGoods);
+        for (SecondhandGoods goods : goodsList) {
+            //查询图片list
+            if (StringUtils.isNotEmpty(goods.getImagePathId())){
+                goods.setImageList(iImageUrlService.selectImageUrlByImagePathId(goods.getImagePathId()));
+            }
+        }
+        return goodsList;
     }
 
     /**
@@ -53,6 +78,20 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
     @Override
     public int insertSecondhandGoods(SecondhandGoods secondhandGoods)
     {
+        //保存图片路径
+        if (secondhandGoods.getImageList().size() > 0 ){
+            ImageUrl url = new ImageUrl();
+            String one=UUID.getUUId();
+            for (String s : secondhandGoods.getImageList()) {
+                url.setImagePathId(one);
+                url.setImagePath(s);
+                iImageUrlService.insertImageUrl(url);
+            }
+            secondhandGoods.setImagePathId(one);
+        }
+        //设置卖家ID
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        secondhandGoods.setUserId(loginUser.getUserId());
         secondhandGoods.setCreateTime(DateUtils.getNowDate());
         return secondhandGoodsMapper.insertSecondhandGoods(secondhandGoods);
     }
@@ -63,9 +102,19 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
      * @param secondhandGoods 二手商品
      * @return 结果
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateSecondhandGoods(SecondhandGoods secondhandGoods)
     {
+        if (secondhandGoods.getImageList().size() > 0){
+            iImageUrlService.deleteImageUrlByImagePathId(secondhandGoods.getImagePathId());
+            ImageUrl url = new ImageUrl();
+            for (String s : secondhandGoods.getImageList()) {
+                url.setImagePathId(secondhandGoods.getImagePathId());
+                url.setImagePath(s);
+                iImageUrlService.insertImageUrl(url);
+            }
+        }
         secondhandGoods.setUpdateTime(DateUtils.getNowDate());
         return secondhandGoodsMapper.updateSecondhandGoods(secondhandGoods);
     }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.image.mapper.ImageUrlMapper">
+    
+    <resultMap type="ImageUrl" id="ImageUrlResult">
+        <result property="imagePathId"    column="image_path_id"    />
+        <result property="imagePath"    column="image_path"    />
+    </resultMap>
+
+    <sql id="selectImageUrlVo">
+        select image_path_id, image_path from image_url
+    </sql>
+
+    <select id="selectImageUrlList" parameterType="ImageUrl" resultMap="ImageUrlResult">
+        <include refid="selectImageUrlVo"/>
+        <where>
+            <if test="imagePathId != null  and imagePathId != ''"> and image_path_id = #{imagePathId}</if>
+            <if test="imagePath != null  and imagePath != ''"> and image_path = #{imagePath}</if>
+        </where>
+    </select>
+    
+    <select id="selectImageUrlByImagePathId" parameterType="String" resultType="String">
+        <include refid="selectImageUrlVo"/>
+        where image_path_id = #{imagePathId}
+    </select>
+        
+    <insert id="insertImageUrl" parameterType="ImageUrl">
+        insert into image_url
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imagePathId != null">image_path_id,</if>
+            <if test="imagePath != null">image_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imagePathId != null">#{imagePathId},</if>
+            <if test="imagePath != null">#{imagePath},</if>
+         </trim>
+    </insert>
+
+    <update id="updateImageUrl" parameterType="ImageUrl">
+        update image_url
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="imagePath != null">image_path = #{imagePath},</if>
+        </trim>
+        where image_path_id = #{imagePathId}
+    </update>
+
+    <delete id="deleteImageUrlByImagePathId" parameterType="String">
+        delete from image_url where image_path_id = #{imagePathId}
+    </delete>
+
+    <delete id="deleteImageUrlByImagePathIds" parameterType="String">
+        delete from image_url where image_path_id in 
+        <foreach item="imagePathId" collection="array" open="(" separator="," close=")">
+            #{imagePathId}
+        </foreach>
+    </delete>
+</mapper>
