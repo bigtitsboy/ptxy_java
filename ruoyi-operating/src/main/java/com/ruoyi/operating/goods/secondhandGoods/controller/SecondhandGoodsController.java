@@ -2,6 +2,9 @@ package com.ruoyi.operating.goods.secondhandGoods.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2022-01-10
  */
+@Api("二手商品")
 @RestController
 @RequestMapping("/goods/secondhandGoods")
 public class SecondhandGoodsController extends BaseController
@@ -37,6 +41,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 查询二手商品列表
      */
+    @ApiOperation("查询二手商品列表")
     //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:list')")
     @GetMapping("/list")
     public TableDataInfo list(SecondhandGoods secondhandGoods)
@@ -49,6 +54,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 导出二手商品列表
      */
+    @ApiOperation("导出二手商品列表")
     //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:export')")
     @Log(title = "二手商品", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -62,6 +68,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 获取二手商品详细信息
      */
+    @ApiOperation("获取二手商品详细信息")
     //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:query')")
     @GetMapping(value = "/{goodsId}")
     public AjaxResult getInfo(@PathVariable("goodsId") Long goodsId)
@@ -72,6 +79,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 新增二手商品
      */
+    @ApiOperation("新增二手商品")
     //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:add')")
     @Log(title = "二手商品", businessType = BusinessType.INSERT)
     @PostMapping
@@ -83,6 +91,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 修改二手商品
      */
+    @ApiOperation("修改二手商品")
     //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:edit')")
     @Log(title = "二手商品", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -94,6 +103,7 @@ public class SecondhandGoodsController extends BaseController
     /**
      * 删除二手商品
      */
+    @ApiOperation("删除二手商品")
     //@PreAuthorize("@ss.hasPermi('goods:secondhandGoods:remove')")
     @Log(title = "二手商品", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{goodsIds}")
