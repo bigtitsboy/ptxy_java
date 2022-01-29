@@ -26,7 +26,7 @@ create table secondhand_goods (
   goods_content     varchar(200)    not null                   comment '商品描述',
   goods_price       decimal(8,2)    not null                   comment '商品价格',
   category_id       bigint(20)      not null                   comment '分类ID',
-  user_id           bigint(20)      not null                   comment '用户ID',
+  user_id           varchar(32)     not null                   comment '用户ID',
   phonenumber       varchar(11)     default ''                 comment '手机号码',
   image_path_id     varchar(32)     default ''                 comment '图片路径id',
   goods_count       bigint(20)      default 0                  comment '商品浏览量',
@@ -193,3 +193,51 @@ create table image_url (
   image_path_id     varchar(32)                                comment '图片路径id',
   image_path        varchar(255)    default ''                 comment '图片路径'
 ) engine=innodb  comment = '图片路径表';
+
+-- ----------------------------
+-- 6、店铺商品表
+-- ----------------------------
+drop table if exists shop_goods;
+create table shop_goods (
+  goods_id          bigint(20)      not null auto_increment    comment '商品ID',
+  goods_name        varchar(200)    not null                   comment '商品名称',
+  goods_content     varchar(200)    not null                   comment '商品描述',
+  goods_price       decimal(8,2)    not null                   comment '商品价格',
+  goods_number      bigint(20)      default 0                  comment '商品数量',
+  category_id       bigint(20)      not null                   comment '分类ID',
+  user_id           varchar(32)     not null                   comment '用户ID',
+  phonenumber       varchar(11)     default ''                 comment '手机号码',
+  image_path_id     varchar(32)     default ''                 comment '图片路径id',
+  goods_count       bigint(20)      default 0                  comment '商品浏览量',
+  status            char(1)         not null                   comment '商品状态（0正常 1停用）',
+  del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
+  create_by         varchar(64)     default ''                 comment '创建者',
+  create_time       datetime                                   comment '创建时间',
+  update_by         varchar(64)     default ''                 comment '更新者',
+  update_time       datetime                                   comment '更新时间',
+  remark            varchar(500)    default ''                 comment '备注',
+  primary key (goods_id)
+) engine=innodb auto_increment=500 comment = '店铺商品表';
+
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('店铺商品', '2007', '1', 'shopGoods', 'goods/shopGoods/index', 1, 0, 'C', '0', '0', 'goods:shopGoods:list', '#', 'admin', sysdate(), '', null, '店铺商品菜单');
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('店铺商品查询', @parentId, '1',  '#', '', 1, 0, 'F', '0', '0', 'goods:shopGoods:query',        '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('店铺商品新增', @parentId, '2',  '#', '', 1, 0, 'F', '0', '0', 'goods:shopGoods:add',          '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('店铺商品修改', @parentId, '3',  '#', '', 1, 0, 'F', '0', '0', 'goods:shopGoods:edit',         '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('店铺商品删除', @parentId, '4',  '#', '', 1, 0, 'F', '0', '0', 'goods:shopGoods:remove',       '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('店铺商品导出', @parentId, '5',  '#', '', 1, 0, 'F', '0', '0', 'goods:shopGoods:export',       '#', 'admin', sysdate(), '', null, '');

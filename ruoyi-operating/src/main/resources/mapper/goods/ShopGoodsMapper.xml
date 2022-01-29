@@ -2,13 +2,14 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.operating.goods.secondhandGoods.mapper.SecondhandGoodsMapper">
+<mapper namespace="com.ruoyi.operating.goods.shopGoods.mapper.ShopGoodsMapper">
     
-    <resultMap type="SecondhandGoods" id="SecondhandGoodsResult">
+    <resultMap type="ShopGoods" id="ShopGoodsResult">
         <result property="goodsId"    column="goods_id"    />
         <result property="goodsName"    column="goods_name"    />
         <result property="goodsContent"    column="goods_content"    />
         <result property="goodsPrice"    column="goods_price"    />
+        <result property="goodsNumber"    column="goods_number"    />
         <result property="categoryId"    column="category_id"    />
         <result property="userId"    column="user_id"    />
         <result property="phonenumber"    column="phonenumber"    />
@@ -23,16 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
     </resultMap>
 
-    <sql id="selectSecondhandGoodsVo">
-        select goods_id, goods_name, goods_content, goods_price, category_id, user_id, phonenumber, image_path_id, goods_count, status, del_flag, create_by, create_time, update_by, update_time, remark from secondhand_goods
+    <sql id="selectShopGoodsVo">
+        select goods_id, goods_name, goods_content, goods_price, goods_number, category_id, user_id, phonenumber, image_path_id, goods_count, status, del_flag, create_by, create_time, update_by, update_time, remark from shop_goods
     </sql>
 
-    <select id="selectSecondhandGoodsList" parameterType="SecondhandGoods" resultMap="SecondhandGoodsResult">
-        <include refid="selectSecondhandGoodsVo"/>
+    <select id="selectShopGoodsList" parameterType="ShopGoods" resultMap="ShopGoodsResult">
+        <include refid="selectShopGoodsVo"/>
         <where>  
             <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
             <if test="goodsContent != null  and goodsContent != ''"> and goods_content = #{goodsContent}</if>
             <if test="goodsPrice != null "> and goods_price = #{goodsPrice}</if>
+            <if test="goodsNumber != null "> and goods_number = #{goodsNumber}</if>
             <if test="categoryId != null "> and category_id = #{categoryId}</if>
             <if test="userId != null and userId != ''"> and user_id = #{userId}</if>
             <if test="phonenumber != null  and phonenumber != ''"> and phonenumber = #{phonenumber}</if>
@@ -42,17 +44,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectSecondhandGoodsByGoodsId" parameterType="Long" resultMap="SecondhandGoodsResult">
-        <include refid="selectSecondhandGoodsVo"/>
+    <select id="selectShopGoodsByGoodsId" parameterType="Long" resultMap="ShopGoodsResult">
+        <include refid="selectShopGoodsVo"/>
         where goods_id = #{goodsId}
     </select>
         
-    <insert id="insertSecondhandGoods" parameterType="SecondhandGoods" useGeneratedKeys="true" keyProperty="goodsId">
-        insert into secondhand_goods
+    <insert id="insertShopGoods" parameterType="ShopGoods" useGeneratedKeys="true" keyProperty="goodsId">
+        insert into shop_goods
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="goodsName != null and goodsName != ''">goods_name,</if>
             <if test="goodsContent != null and goodsContent != ''">goods_content,</if>
             <if test="goodsPrice != null">goods_price,</if>
+            <if test="goodsNumber != null">goods_number,</if>
             <if test="categoryId != null">category_id,</if>
             <if test="userId != null and userId != ''">user_id,</if>
             <if test="phonenumber != null">phonenumber,</if>
@@ -70,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="goodsName != null and goodsName != ''">#{goodsName},</if>
             <if test="goodsContent != null and goodsContent != ''">#{goodsContent},</if>
             <if test="goodsPrice != null">#{goodsPrice},</if>
+            <if test="goodsNumber != null">#{goodsNumber},</if>
             <if test="categoryId != null">#{categoryId},</if>
             <if test="userId != null and userId != ''">#{userId},</if>
             <if test="phonenumber != null">#{phonenumber},</if>
@@ -85,12 +89,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateSecondhandGoods" parameterType="SecondhandGoods">
-        update secondhand_goods
+    <update id="updateShopGoods" parameterType="ShopGoods">
+        update shop_goods
         <trim prefix="SET" suffixOverrides=",">
             <if test="goodsName != null and goodsName != ''">goods_name = #{goodsName},</if>
             <if test="goodsContent != null and goodsContent != ''">goods_content = #{goodsContent},</if>
             <if test="goodsPrice != null">goods_price = #{goodsPrice},</if>
+            <if test="goodsNumber != null">goods_number = #{goodsNumber},</if>
             <if test="categoryId != null">category_id = #{categoryId},</if>
             <if test="userId != null and userId != ''">user_id = #{userId},</if>
             <if test="phonenumber != null">phonenumber = #{phonenumber},</if>
@@ -107,12 +112,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where goods_id = #{goodsId}
     </update>
 
-    <delete id="deleteSecondhandGoodsByGoodsId" parameterType="Long">
-        delete from secondhand_goods where goods_id = #{goodsId}
+    <delete id="deleteShopGoodsByGoodsId" parameterType="Long">
+        delete from shop_goods where goods_id = #{goodsId}
     </delete>
 
-    <delete id="deleteSecondhandGoodsByGoodsIds" parameterType="String">
-        delete from secondhand_goods where goods_id in 
+    <delete id="deleteShopGoodsByGoodsIds" parameterType="String">
+        delete from shop_goods where goods_id in 
         <foreach item="goodsId" collection="array" open="(" separator="," close=")">
             #{goodsId}
         </foreach>

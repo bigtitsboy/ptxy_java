@@ -1,4 +1,4 @@
-package com.ruoyi.operating.goods.secondhandGoods.domain;
+package com.ruoyi.operating.goods.shopGoods.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,12 +9,12 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 二手商品对象 secondhand_goods
+ * 店铺商品对象 shop_goods
  * 
  * @author ruoyi
- * @date 2022-01-10
+ * @date 2022-01-26
  */
-public class SecondhandGoods extends BaseEntity
+public class ShopGoods extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,10 @@ public class SecondhandGoods extends BaseEntity
     @Excel(name = "商品价格")
     private BigDecimal goodsPrice;
 
+    /** 商品数量 */
+    @Excel(name = "商品数量")
+    private Long goodsNumber;
+
     /** 分类ID */
     @Excel(name = "分类ID")
     private Long categoryId;
@@ -45,8 +49,8 @@ public class SecondhandGoods extends BaseEntity
     @Excel(name = "手机号码")
     private String phonenumber;
 
-    /** 图片路径ID */
-    @Excel(name = "图片路径ID")
+    /** 图片路径id */
+    @Excel(name = "图片路径id")
     private String imagePathId;
 
     /** 图片路径List */
@@ -99,16 +103,25 @@ public class SecondhandGoods extends BaseEntity
     {
         return goodsPrice;
     }
+    public void setGoodsNumber(Long goodsNumber) 
+    {
+        this.goodsNumber = goodsNumber;
+    }
+
+    public Long getGoodsNumber() 
+    {
+        return goodsNumber;
+    }
     public void setCategoryId(Long categoryId) 
     {
         this.categoryId = categoryId;
     }
 
-    public Long getCategoryId()
+    public Long getCategoryId() 
     {
         return categoryId;
     }
-    public void setUserId(String userId)
+    public void setUserId(String  userId)
     {
         this.userId = userId;
     }
@@ -126,13 +139,18 @@ public class SecondhandGoods extends BaseEntity
     {
         return phonenumber;
     }
-
-    public String getImagePathId() {
-        return imagePathId;
+    public void setImagePathId(String imagePathId) 
+    {
+        this.imagePathId = imagePathId;
     }
 
-    public void setImagePathId(String imagePathId) {
-        this.imagePathId = imagePathId;
+    public String getImagePathId() 
+    {
+        return imagePathId;
+    }
+    public void setGoodsCount(Long goodsCount) 
+    {
+        this.goodsCount = goodsCount;
     }
 
     public List<String> getImageList() {
@@ -143,12 +161,7 @@ public class SecondhandGoods extends BaseEntity
         this.imageList = imageList;
     }
 
-    public void setGoodsCount(Long goodsCount)
-    {
-        this.goodsCount = goodsCount;
-    }
-
-    public Long getGoodsCount()
+    public Long getGoodsCount() 
     {
         return goodsCount;
     }
@@ -178,6 +191,7 @@ public class SecondhandGoods extends BaseEntity
             .append("goodsName", getGoodsName())
             .append("goodsContent", getGoodsContent())
             .append("goodsPrice", getGoodsPrice())
+            .append("goodsNumber", getGoodsNumber())
             .append("categoryId", getCategoryId())
             .append("userId", getUserId())
             .append("phonenumber", getPhonenumber())

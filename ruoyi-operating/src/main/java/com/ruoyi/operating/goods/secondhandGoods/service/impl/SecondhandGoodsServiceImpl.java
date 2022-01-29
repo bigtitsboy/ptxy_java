@@ -47,6 +47,11 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
         if (StringUtils.isNotEmpty(goods.getImagePathId())){
             goods.setImageList(iImageUrlService.selectImageUrlByImagePathId(goods.getImagePathId()));
         }
+        //商品浏览量+1
+        SecondhandGoods secondhandGoods = new SecondhandGoods();
+        secondhandGoods.setGoodsId(goodsId);
+        secondhandGoods.setGoodsCount(goods.getGoodsCount() + 1L);
+        updateSecondhandGoods(secondhandGoods);
         return  goods;
     }
 
@@ -91,7 +96,11 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
         }
         //设置卖家ID
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        secondhandGoods.setUserId(loginUser.getUserId());
+        if (loginUser.getUser() == null){
+            secondhandGoods.setUserId(loginUser.getMember().getMemberId());
+        }else {
+            secondhandGoods.setUserId(String.valueOf(loginUser.getUser().getUserId()));
+        }
         secondhandGoods.setCreateTime(DateUtils.getNowDate());
         return secondhandGoodsMapper.insertSecondhandGoods(secondhandGoods);
     }
