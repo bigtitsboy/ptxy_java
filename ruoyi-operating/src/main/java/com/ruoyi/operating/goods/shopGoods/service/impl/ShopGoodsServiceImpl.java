@@ -82,7 +82,7 @@ public class ShopGoodsServiceImpl implements IShopGoodsService
     public int insertShopGoods(ShopGoods shopGoods)
     {
         //保存图片路径
-        if (shopGoods.getImageList().size() > 0 ){
+        if (shopGoods.getImageList() != null){
             ImageUrl url = new ImageUrl();
             String one= UUID.getUUId();
             for (String s : shopGoods.getImageList()) {
@@ -94,11 +94,7 @@ public class ShopGoodsServiceImpl implements IShopGoodsService
         }
         //设置卖家ID
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (loginUser.getUser() == null){
-            shopGoods.setUserId(loginUser.getMember().getMemberId());
-        }else {
-            shopGoods.setUserId(String.valueOf(loginUser.getUser().getUserId()));
-        }
+        shopGoods.setUserId(loginUser.getMember().getMemberId());
         shopGoods.setCreateTime(DateUtils.getNowDate());
         return shopGoodsMapper.insertShopGoods(shopGoods);
     }
@@ -112,7 +108,7 @@ public class ShopGoodsServiceImpl implements IShopGoodsService
     @Override
     public int updateShopGoods(ShopGoods shopGoods)
     {
-        if (shopGoods.getImageList().size() > 0){
+        if (shopGoods.getImageList() != null){
             iImageUrlService.deleteImageUrlByImagePathId(shopGoods.getImagePathId());
             ImageUrl url = new ImageUrl();
             for (String s : shopGoods.getImageList()) {

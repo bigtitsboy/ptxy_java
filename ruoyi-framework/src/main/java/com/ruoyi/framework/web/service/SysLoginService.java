@@ -9,6 +9,7 @@ import com.ruoyi.common.exception.UtilException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.user.info.member.domain.MemberInfo;
 import com.ruoyi.user.info.member.service.IMemberInfoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -119,8 +120,9 @@ public class SysLoginService
         memberInfo.setMemberName(username);
         memberInfo.setPassword(password);
         MemberInfo memberLogin = getMemberLogin(memberInfo, true, "账号/密码不正确");
-
-        LoginUser loginUser = new LoginUser(new Member(username, password));
+        Member member = new Member();
+        BeanUtils.copyProperties(memberLogin,member);
+        LoginUser loginUser = new LoginUser(member);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         authenticationToken.setDetails(loginUser);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -143,7 +145,9 @@ public class SysLoginService
         memberInfo.setPassword(password);
         MemberInfo memberLogin = getMemberLogin(memberInfo, true, "手机号码/密码不正确");
 
-        LoginUser loginUser = new LoginUser(new Member(memberLogin.getMemberName(), password));
+        Member member = new Member();
+        BeanUtils.copyProperties(memberLogin,member);
+        LoginUser loginUser = new LoginUser(member);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberLogin.getMemberName(), password);
         authenticationToken.setDetails(loginUser);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -165,8 +169,9 @@ public class SysLoginService
         memberInfo.setEmail(username);
         memberInfo.setPassword(password);
         MemberInfo memberLogin = getMemberLogin(memberInfo, true, "邮箱/密码不正确");
-
-        LoginUser loginUser = new LoginUser(new Member(memberLogin.getMemberName(), password));
+        Member member = new Member();
+        BeanUtils.copyProperties(memberLogin,member);
+        LoginUser loginUser = new LoginUser(member);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberLogin.getMemberName(), password);
         authenticationToken.setDetails(loginUser);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);

@@ -84,7 +84,7 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
     public int insertSecondhandGoods(SecondhandGoods secondhandGoods)
     {
         //保存图片路径
-        if (secondhandGoods.getImageList().size() > 0 ){
+        if (secondhandGoods.getImageList() != null ){
             ImageUrl url = new ImageUrl();
             String one=UUID.getUUId();
             for (String s : secondhandGoods.getImageList()) {
@@ -96,11 +96,7 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
         }
         //设置卖家ID
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (loginUser.getUser() == null){
-            secondhandGoods.setUserId(loginUser.getMember().getMemberId());
-        }else {
-            secondhandGoods.setUserId(String.valueOf(loginUser.getUser().getUserId()));
-        }
+        secondhandGoods.setUserId(loginUser.getMember().getMemberId());
         secondhandGoods.setCreateTime(DateUtils.getNowDate());
         return secondhandGoodsMapper.insertSecondhandGoods(secondhandGoods);
     }
@@ -115,7 +111,7 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
     @Override
     public int updateSecondhandGoods(SecondhandGoods secondhandGoods)
     {
-        if (secondhandGoods.getImageList().size() > 0){
+        if (secondhandGoods.getImageList() != null){
             iImageUrlService.deleteImageUrlByImagePathId(secondhandGoods.getImagePathId());
             ImageUrl url = new ImageUrl();
             for (String s : secondhandGoods.getImageList()) {
