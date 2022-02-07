@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.system;
 import java.util.List;
 import java.util.Set;
 
+import com.ruoyi.common.core.domain.entity.Member;
 import com.ruoyi.common.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -100,6 +101,22 @@ public class SysLoginController
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
+
+    /**
+     * 获取移动端用户信息
+     *
+     * @return 用户信息
+     */
+    @ApiOperation("获取移动端用户信息")
+    @GetMapping("/api/getInfo")
+    public AjaxResult apiGetInfo()
+    {
+        Member member = SecurityUtils.getLoginUser().getMember();
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("member", member);
+        return ajax;
+    }
+
     /**
      * 获取用户信息
      * 
