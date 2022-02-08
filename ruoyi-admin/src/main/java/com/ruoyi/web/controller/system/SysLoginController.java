@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.ruoyi.common.core.domain.entity.Member;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.user.info.member.domain.MemberInfo;
 import com.ruoyi.user.info.member.service.IMemberInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -115,9 +116,9 @@ public class SysLoginController
     public AjaxResult apiGetInfo()
     {
         Member member = SecurityUtils.getLoginUser().getMember();
-        int info = iMemberInfoService.deleteMemberInfoByMemberId(member.getMemberId());
+        MemberInfo memberInfo = iMemberInfoService.selectMemberInfoByMemberId(member.getMemberId());
         AjaxResult ajax = AjaxResult.success();
-        ajax.put("member", info);
+        ajax.put("member", memberInfo);
         return ajax;
     }
 
