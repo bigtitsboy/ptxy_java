@@ -42,7 +42,7 @@ public class MemberInfoController extends BaseController
      * 查询会员信息列表
      */
     @ApiOperation("查询会员信息列表")
-    @PreAuthorize("@ss.hasPermi('info:member:list')")
+//    @PreAuthorize("@ss.hasPermi('info:member:list')")
     @GetMapping("/list")
     public TableDataInfo list(MemberInfo memberInfo)
     {
@@ -55,7 +55,7 @@ public class MemberInfoController extends BaseController
      * 导出会员信息列表
      */
     @ApiOperation("导出会员信息列表")
-    @PreAuthorize("@ss.hasPermi('info:member:export')")
+//    @PreAuthorize("@ss.hasPermi('info:member:export')")
     @Log(title = "会员信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, MemberInfo memberInfo)
@@ -69,7 +69,7 @@ public class MemberInfoController extends BaseController
      * 获取会员信息详细信息
      */
     @ApiOperation("获取会员信息详细信息")
-    @PreAuthorize("@ss.hasPermi('info:member:query')")
+//    @PreAuthorize("@ss.hasPermi('info:member:query')")
     @GetMapping(value = "/{memberId}")
     public AjaxResult getInfo(@PathVariable("memberId") String memberId)
     {
@@ -80,7 +80,7 @@ public class MemberInfoController extends BaseController
      * 新增会员信息
      */
     @ApiOperation("新增会员信息")
-    @PreAuthorize("@ss.hasPermi('info:member:add')")
+//    @PreAuthorize("@ss.hasPermi('info:member:add')")
     @Log(title = "会员信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody MemberInfo memberInfo)
@@ -92,7 +92,7 @@ public class MemberInfoController extends BaseController
      * 修改会员信息
      */
     @ApiOperation("修改会员信息")
-    @PreAuthorize("@ss.hasPermi('info:member:edit')")
+//    @PreAuthorize("@ss.hasPermi('info:member:edit')")
     @Log(title = "会员信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody MemberInfo memberInfo)
@@ -104,7 +104,7 @@ public class MemberInfoController extends BaseController
      * 删除会员信息
      */
     @ApiOperation("删除会员信息")
-    @PreAuthorize("@ss.hasPermi('info:member:remove')")
+//    @PreAuthorize("@ss.hasPermi('info:member:remove')")
     @Log(title = "会员信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{memberIds}")
     public AjaxResult remove(@PathVariable String[] memberIds)
