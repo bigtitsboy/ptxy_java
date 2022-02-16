@@ -94,7 +94,11 @@ public class ShopGoodsServiceImpl implements IShopGoodsService
         }
         //设置卖家ID
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        shopGoods.setUserId(loginUser.getMember().getMemberId());
+        if (loginUser.getMember() != null){
+            shopGoods.setUserId(loginUser.getMember().getMemberId());
+        }else {
+            shopGoods.setUserId("admin");
+        }
         shopGoods.setCreateTime(DateUtils.getNowDate());
         return shopGoodsMapper.insertShopGoods(shopGoods);
     }

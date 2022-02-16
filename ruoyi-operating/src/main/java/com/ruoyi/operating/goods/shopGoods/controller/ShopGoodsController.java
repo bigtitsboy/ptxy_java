@@ -55,7 +55,7 @@ public class ShopGoodsController extends BaseController
      * 导出店铺商品列表
      */
     @ApiOperation("导出店铺商品列表")
-    //@PreAuthorize("@ss.hasPermi('goods:shopGoods:export')")
+//    @PreAuthorize("@ss.hasPermi('goods:shopGoods:export')")
     @Log(title = "店铺商品", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ShopGoods shopGoods)

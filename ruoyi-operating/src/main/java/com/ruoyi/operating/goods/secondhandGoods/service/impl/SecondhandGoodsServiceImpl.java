@@ -96,7 +96,11 @@ public class SecondhandGoodsServiceImpl implements ISecondhandGoodsService
         }
         //设置卖家ID
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        secondhandGoods.setUserId(loginUser.getMember().getMemberId());
+        if (loginUser.getMember() != null){
+            secondhandGoods.setUserId(loginUser.getMember().getMemberId());
+        }else {
+            secondhandGoods.setUserId("admin");
+        }
         secondhandGoods.setCreateTime(DateUtils.getNowDate());
         return secondhandGoodsMapper.insertSecondhandGoods(secondhandGoods);
     }
