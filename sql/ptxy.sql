@@ -209,7 +209,7 @@ create table shop_goods (
   phonenumber       varchar(11)     default ''                 comment '手机号码',
   image_path_id     varchar(32)     default ''                 comment '图片路径id',
   goods_count       bigint(20)      default 0                  comment '商品浏览量',
-  status            char(1)         default 0                  comment '商品状态（0正常 1停用）',
+  status            char(1)         default '0'                comment '商品状态（0正常 1停用）',
   del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
   create_by         varchar(64)     default ''                 comment '创建者',
   create_time       datetime                                   comment '创建时间',
@@ -241,3 +241,44 @@ values('店铺商品删除', @parentId, '4',  '#', '', 1, 0, 'F', '0', '0', 'goo
 
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('店铺商品导出', @parentId, '5',  '#', '', 1, 0, 'F', '0', '0', 'goods:shopGoods:export',       '#', 'admin', sysdate(), '', null, '');
+
+-- ----------------------------
+-- 7、收货地址表
+-- ----------------------------
+drop table if exists consignee_address;
+create table consignee_address (
+  address_id        bigint(20)      not null auto_increment    comment '收货地址ID',
+  user_id           varchar(32)     not null                   comment '用户ID',
+  consignee         varchar(30)     not null                   comment '收货人',
+  address_content   varchar(200)    not null                   comment '详细地址',
+  phonenumber       varchar(11)     default ''                 comment '手机号码',
+  status            char(1)         default '0'                comment '收货地址状态（0正常 1停用）',
+  del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
+  create_by         varchar(64)     default ''                 comment '创建者',
+  create_time       datetime                                   comment '创建时间',
+  update_by         varchar(64)     default ''                 comment '更新者',
+  update_time       datetime                                   comment '更新时间',
+  remark            varchar(500)    default ''                 comment '备注',
+  primary key (address_id)
+) engine=innodb auto_increment=500 comment = '收货地址表';
+
+-- ----------------------------
+-- 8、商品订单表
+-- ----------------------------
+drop table if exists shop_order;
+create table shop_order (
+  order_id          bigint(20)      not null auto_increment    comment '商品订单ID',
+  goods_id          bigint(20)      not null                   comment '商品ID',
+  goods_number      bigint(20)      default 1                  comment '商品数量',
+  order_price       decimal(8,2)    not null                   comment '订单金额',
+  buyer_user_id     varchar(32)     not null                   comment '买家用户ID',
+  address_id        bigint(20)      not null                   comment '收货地址ID',
+  status            char(1)         default '0'                comment '订单状态（0正常 1停用）',
+  del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
+  create_by         varchar(64)     default ''                 comment '创建者',
+  create_time       datetime                                   comment '创建时间',
+  update_by         varchar(64)     default ''                 comment '更新者',
+  update_time       datetime                                   comment '更新时间',
+  remark            varchar(500)    default ''                 comment '备注',
+  primary key (order_id)
+) engine=innodb auto_increment=500 comment = '商品订单表';

@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectImageUrlByImagePathId" parameterType="String" resultType="String">
-        <include refid="selectImageUrlVo"/>
+        select image_path from image_url
         where image_path_id = #{imagePathId}
     </select>
         
