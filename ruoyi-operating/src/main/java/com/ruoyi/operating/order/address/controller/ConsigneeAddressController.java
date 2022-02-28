@@ -2,6 +2,9 @@ package com.ruoyi.operating.order.address.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2022-02-28
  */
+@Api("收货地址")
 @RestController
 @RequestMapping("/order/address")
 public class ConsigneeAddressController extends BaseController
@@ -37,7 +41,8 @@ public class ConsigneeAddressController extends BaseController
     /**
      * 查询收货地址列表
      */
-    @PreAuthorize("@ss.hasPermi('order:address:list')")
+    @ApiOperation("查询收货地址列表")
+//    @PreAuthorize("@ss.hasPermi('order:address:list')")
     @GetMapping("/list")
     public TableDataInfo list(ConsigneeAddress consigneeAddress)
     {
@@ -49,7 +54,8 @@ public class ConsigneeAddressController extends BaseController
     /**
      * 导出收货地址列表
      */
-    @PreAuthorize("@ss.hasPermi('order:address:export')")
+    @ApiOperation("导出收货地址列表")
+//    @PreAuthorize("@ss.hasPermi('order:address:export')")
     @Log(title = "收货地址", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ConsigneeAddress consigneeAddress)
@@ -62,7 +68,8 @@ public class ConsigneeAddressController extends BaseController
     /**
      * 获取收货地址详细信息
      */
-    @PreAuthorize("@ss.hasPermi('order:address:query')")
+    @ApiOperation("获取收货地址详细信息")
+//    @PreAuthorize("@ss.hasPermi('order:address:query')")
     @GetMapping(value = "/{addressId}")
     public AjaxResult getInfo(@PathVariable("addressId") Long addressId)
     {
@@ -72,7 +79,8 @@ public class ConsigneeAddressController extends BaseController
     /**
      * 新增收货地址
      */
-    @PreAuthorize("@ss.hasPermi('order:address:add')")
+    @ApiOperation("新增收货地址")
+//    @PreAuthorize("@ss.hasPermi('order:address:add')")
     @Log(title = "收货地址", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ConsigneeAddress consigneeAddress)
@@ -83,7 +91,8 @@ public class ConsigneeAddressController extends BaseController
     /**
      * 修改收货地址
      */
-    @PreAuthorize("@ss.hasPermi('order:address:edit')")
+    @ApiOperation("修改收货地址")
+//    @PreAuthorize("@ss.hasPermi('order:address:edit')")
     @Log(title = "收货地址", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ConsigneeAddress consigneeAddress)
@@ -94,7 +103,8 @@ public class ConsigneeAddressController extends BaseController
     /**
      * 删除收货地址
      */
-    @PreAuthorize("@ss.hasPermi('order:address:remove')")
+    @ApiOperation("删除收货地址")
+//    @PreAuthorize("@ss.hasPermi('order:address:remove')")
     @Log(title = "收货地址", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{addressIds}")
     public AjaxResult remove(@PathVariable Long[] addressIds)

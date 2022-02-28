@@ -1,7 +1,10 @@
 package com.ruoyi.operating.order.shopOrder.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.operating.order.shopOrder.mapper.ShopOrderMapper;
@@ -53,6 +56,12 @@ public class ShopOrderServiceImpl implements IShopOrderService
     @Override
     public int insertShopOrder(ShopOrder shopOrder)
     {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (loginUser.getMember() != null){
+            shopOrder.setBuyerUserId(loginUser.getMember().getMemberId());
+        }else {
+            shopOrder.setBuyerUserId("admin");
+        }
         shopOrder.setCreateTime(DateUtils.getNowDate());
         return shopOrderMapper.insertShopOrder(shopOrder);
     }

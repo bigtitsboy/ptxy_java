@@ -2,6 +2,9 @@ package com.ruoyi.operating.order.shopOrder.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2022-02-28
  */
+@Api("商品订单")
 @RestController
 @RequestMapping("/order/shopOrder")
 public class ShopOrderController extends BaseController
@@ -37,7 +41,8 @@ public class ShopOrderController extends BaseController
     /**
      * 查询商品订单列表
      */
-    @PreAuthorize("@ss.hasPermi('order:shopOrder:list')")
+    @ApiOperation("查询商品订单列表")
+//    @PreAuthorize("@ss.hasPermi('order:shopOrder:list')")
     @GetMapping("/list")
     public TableDataInfo list(ShopOrder shopOrder)
     {
@@ -49,7 +54,8 @@ public class ShopOrderController extends BaseController
     /**
      * 导出商品订单列表
      */
-    @PreAuthorize("@ss.hasPermi('order:shopOrder:export')")
+    @ApiOperation("导出商品订单列表")
+//    @PreAuthorize("@ss.hasPermi('order:shopOrder:export')")
     @Log(title = "商品订单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ShopOrder shopOrder)
@@ -62,7 +68,8 @@ public class ShopOrderController extends BaseController
     /**
      * 获取商品订单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('order:shopOrder:query')")
+    @ApiOperation("获取商品订单详细信息")
+//    @PreAuthorize("@ss.hasPermi('order:shopOrder:query')")
     @GetMapping(value = "/{orderId}")
     public AjaxResult getInfo(@PathVariable("orderId") Long orderId)
     {
@@ -72,7 +79,8 @@ public class ShopOrderController extends BaseController
     /**
      * 新增商品订单
      */
-    @PreAuthorize("@ss.hasPermi('order:shopOrder:add')")
+    @ApiOperation("新增商品订单")
+//    @PreAuthorize("@ss.hasPermi('order:shopOrder:add')")
     @Log(title = "商品订单", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ShopOrder shopOrder)
@@ -83,7 +91,8 @@ public class ShopOrderController extends BaseController
     /**
      * 修改商品订单
      */
-    @PreAuthorize("@ss.hasPermi('order:shopOrder:edit')")
+    @ApiOperation("修改商品订单")
+//    @PreAuthorize("@ss.hasPermi('order:shopOrder:edit')")
     @Log(title = "商品订单", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ShopOrder shopOrder)
@@ -94,7 +103,8 @@ public class ShopOrderController extends BaseController
     /**
      * 删除商品订单
      */
-    @PreAuthorize("@ss.hasPermi('order:shopOrder:remove')")
+    @ApiOperation("删除商品订单")
+//    @PreAuthorize("@ss.hasPermi('order:shopOrder:remove')")
     @Log(title = "商品订单", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{orderIds}")
     public AjaxResult remove(@PathVariable Long[] orderIds)

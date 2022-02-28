@@ -1,6 +1,9 @@
 package com.ruoyi.operating.order.shopOrder.domain;
 
 import java.math.BigDecimal;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -12,46 +15,57 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2022-02-28
  */
+@ApiModel("商品订单对象")
 public class ShopOrder extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 商品订单ID */
+
     private Long orderId;
 
     /** 商品ID */
+    @ApiModelProperty("商品ID")
     @Excel(name = "商品ID")
     private Long goodsId;
 
     /** 商品数量 */
+    @ApiModelProperty("商品数量")
     @Excel(name = "商品数量")
     private Long goodsNumber;
 
     /** 订单金额 */
+    @ApiModelProperty("订单金额")
     @Excel(name = "订单金额")
     private BigDecimal orderPrice;
 
     /** 买家用户ID */
+    @ApiModelProperty("买家用户ID")
     @Excel(name = "买家用户ID")
     private String buyerUserId;
 
     /** 收货人 */
+    @ApiModelProperty("收货人")
     @Excel(name = "收货人")
     private String consignee;
 
     /** 详细地址 */
+    @ApiModelProperty("详细地址")
     @Excel(name = "详细地址")
     private String addressContent;
 
     /** 手机号码 */
+    @ApiModelProperty("手机号码")
     @Excel(name = "手机号码")
     private String phonenumber;
 
     /** 订单状态（0待接单 1商家已接单 2配送中 3配送完成 4取消） */
+    @ApiModelProperty("订单状态（0待接单 1商家已接单 2配送中 3配送完成 4取消）")
     @Excel(name = "订单状态", readConverterExp = "0=待接单,1=商家已接单,2=配送中,3=配送完成,4=取消")
     private String status;
 
     /** 删除标志（0代表存在 2代表删除） */
+    @ApiModelProperty("删除标志（0代表存在 2代表删除）")
     private String delFlag;
 
     public void setOrderId(Long orderId) 

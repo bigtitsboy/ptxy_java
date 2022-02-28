@@ -1,7 +1,10 @@
 package com.ruoyi.operating.order.address.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.operating.order.address.mapper.ConsigneeAddressMapper;
@@ -53,6 +56,12 @@ public class ConsigneeAddressServiceImpl implements IConsigneeAddressService
     @Override
     public int insertConsigneeAddress(ConsigneeAddress consigneeAddress)
     {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (loginUser.getMember() != null){
+            consigneeAddress.setUserId(loginUser.getMember().getMemberId());
+        }else {
+            consigneeAddress.setUserId("admin");
+        }
         consigneeAddress.setCreateTime(DateUtils.getNowDate());
         return consigneeAddressMapper.insertConsigneeAddress(consigneeAddress);
     }
